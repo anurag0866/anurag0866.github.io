@@ -1,0 +1,164 @@
+<!-- This links to the jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- This link tag gets boostrap installed -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<!-- This links to the google charts library  -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+
+<<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-button w3-hide-medium w3-hide-large" href="javascript:void(0)" onclick="w3_open()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-theme-l1" onclick ="window.location.href="index"">Home</a>
+
+    <a href="League Table.html" class="w3-bar-item w3-button w3-theme-l1" onclick ="window.location.href="index"">League Table</a>
+
+    <a href="YourStory.html" class="w3-bar-item w3-button w3-hover-white"> Your Story </a>
+
+  </div>
+</div>
+
+<body>
+  <div class="w3-content" style="max-width:800px;margin-top:46px">
+<h1>
+
+  <font size="6"><center> League Table </center> </font>
+</h1>
+<table class="w3-table">
+<tr>
+  <th> <font size="4"> Name </font> </th>
+  <th> <font size="4"> Current Score </font> </th>
+  <th> <font size="4"> Average Score </font>  </th>
+  <th> <font size="4"> Weekly Change </font>  </th>
+</tr>
+<tr>
+  <td> Sirius Black </td>
+  <td> <div class = "siriusscore-id"> </div> </td>
+  <td> 62 </td>
+  <td> <div class = "siriuschange-id"> </div> </td>
+</tr>
+<tr>
+  <td>   Lily Potter </td>
+  <td> 78 </td>
+  <td> 58 </td>
+  <td> 20 </td>
+</tr>
+<tr>
+  <td> Severus Snape </td>
+  <td> 32 </td>
+  <td> 52 </td>
+  <td> -20 </td>
+</tr>
+<tr>
+  <td> James Potter </td>
+  <td> 84 </td>
+  <td> 82 </td>
+  <td> 2 </td>
+</tr>
+<tr>
+  <td> Remus Lupin </td>
+  <td> 96 </td>
+  <td> 70 </td>
+  <td> 26 </td>
+</tr>
+<tr>
+  <td> Peter Pettigrew </td>
+  <td> 34 </td>
+  <td>   42  </td>
+  <td>   -8  </td>
+</tr>
+
+</table>
+
+
+</body>
+</html>
+
+<script>
+
+//This is a comment in Javascript - now the html comment tag <!-- --> does not work
+/* This is also a comment in Javascript */
+
+
+// $ is the way you use functions from jQuery
+//  $(document).ready(x) calls the function x when everything has loaded
+$(document).ready(function() {
+
+  	//This loads the google charts api library
+  	google.charts.load('current', {'packages':['corechart']});
+
+  	//once you load google charts library call this will cause it to call the function getDataAndDrawChart
+  	google.charts.setOnLoadCallback(getDataAndDrawChart);
+
+
+	//here we define what we want the function getDataAndDrawChart to do - it will use jQuery's ajax (asynchronous javascript)
+	//to get data from adafruit.io's REST API and then use that data to draw a chart using google charts
+	function getDataAndDrawChart(){
+    //
+		// //this will make a HTTP GET request for the url given, and then call the function when it gets back data
+   	// 	$.ajax({
+    //    		 url: "https://io.adafruit.com/api/v2/anuragms/feeds/counter/data" //this gets all the data in a adafruit.io feed. make this your feed/data - make sure you make it public
+    // 	}).then(function(data) {
+    //
+		//    // console.log(data.length); // this is how you log stuff to the console - use chrome or firefox to debug and view console
+    //    //
+		//    // var chartData = new Array(data.length + 1);  // this makes an array to stor your chart data in, have one more row than you have data for the labels
+		//    // chartData[0]= [ 'time', 'counter'];  //these are the labels for your chart columns, this has two columns, but you could add more
+    //    //
+		//    // //This is a jQuery version of for each, a type of for loop - it will call the function for each element in the provided array (in this case data)
+		//    // $.each(data, function(index, element) {
+    //    //   //console.log(data.value)
+		// 		// console.log(element.value); //in this case element is each data item you have in your adafruit.io feed. use element.x to get the value from the JSON key pair, ie element.value, element.created_epoch (which is time in unix since 1970)
+    //    //
+    //    //
+		// 		// // here we create a 1D array for each row of the data for the chart
+		// 		// chartData[index+1]= [parseInt(element.created_epoch), parseInt(element.value)]; //parseFloat() if you use a float
+    //    //
+		// 		// // here we add a div to greeting-id in the html code above with the text from the json
+		// 		// $('.greeting-id').append($('<div>', {
+		// 		// 	text: element.value
+    //    //  }));
+    //    //
+    //    //
+    //    //   	});
+    //       console.log(data[0].value)
+    //       $('.greeting-id').append($('<div>', {
+  	// 				text: data[0].value
+    //       }));
+   	// 	 });
+       var score = 0;
+       var change = 0;
+       $.ajax({
+       url: "https://io.adafruit.com/api/v2/anuragms/feeds/anurag216score/data",
+       type: 'GET',
+       success: function(data){
+         score = (data[0].value) // this is your response obj that you can work with
+//         console.log(score)
+         $('.siriusscore-id').append($('<div>', {
+          text: data[0].value
+         }));
+         change = score - 62
+         $('.siriuschange-id').append($('<div>', {
+          text: change
+         }));
+       }
+      });
+    };
+});
+
+
+
+</script>
